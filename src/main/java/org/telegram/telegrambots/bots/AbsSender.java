@@ -42,7 +42,6 @@ import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageCaption
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.File;
-import org.telegram.telegrambots.api.objects.MediaMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.User;
 import org.telegram.telegrambots.api.objects.UserProfilePhotos;
@@ -436,7 +435,7 @@ public abstract class AbsSender {
             throw new TelegramApiException("Error at sendDocument", jsonObject.getString("description"));
         }
 
-        return new Message(jsonObject);
+        return new Message(jsonObject.getJSONObject(Constants.RESPONSEFIELDRESULT));
     }
 
     public Message sendPhoto(SendPhoto sendPhoto) throws TelegramApiException {
@@ -455,9 +454,8 @@ public abstract class AbsSender {
                 if (sendPhoto.getReplayToMessageId() != null) {
                     builder.addTextBody(SendPhoto.REPLYTOMESSAGEID_FIELD, sendPhoto.getReplayToMessageId().toString());
                 }
-                String caption = sendPhoto.getCaption();
-                if (caption != null) {
-                    builder.addTextBody(SendPhoto.CAPTION_FIELD, caption);
+                if (sendPhoto.getCaption() != null) {
+                    builder.addTextBody(SendPhoto.CAPTION_FIELD, sendPhoto.getCaption());
                 }
                 if (sendPhoto.getDisableNotification() != null) {
                     builder.addTextBody(SendPhoto.DISABLENOTIFICATION_FIELD, sendPhoto.getDisableNotification().toString());
@@ -474,17 +472,16 @@ public abstract class AbsSender {
                 if (sendPhoto.getReplayToMessageId() != null) {
                     nameValuePairs.add(new BasicNameValuePair(SendPhoto.REPLYTOMESSAGEID_FIELD, sendPhoto.getReplayToMessageId().toString()));
                 }
-                String caption = sendPhoto.getCaption();
-                if (caption != null) {
-                    nameValuePairs.add(new BasicNameValuePair(SendPhoto.CAPTION_FIELD, caption));
+                if (sendPhoto.getCaption() != null) {
+                    nameValuePairs.add(new BasicNameValuePair(SendPhoto.CAPTION_FIELD, sendPhoto.getCaption()));
                 }
                 if (sendPhoto.getDisableNotification() != null) {
                     nameValuePairs.add(new BasicNameValuePair(SendPhoto.DISABLENOTIFICATION_FIELD, sendPhoto.getDisableNotification().toString()));
                 }
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs, StandardCharsets.UTF_8));
             }
+
             CloseableHttpResponse response = httpClient.execute(httppost);
-            
             HttpEntity ht = response.getEntity();
             BufferedHttpEntity buf = new BufferedHttpEntity(ht);
             responseContent = EntityUtils.toString(buf, StandardCharsets.UTF_8);
@@ -497,7 +494,7 @@ public abstract class AbsSender {
             throw new TelegramApiException("Error at sendPhoto", jsonObject.getString("description"));
         }
 
-        return new MediaMessage(jsonObject);
+        return new Message(jsonObject.getJSONObject(Constants.RESPONSEFIELDRESULT));
     }
 
     public Message sendVideo(SendVideo sendVideo) throws TelegramApiException {
@@ -574,7 +571,7 @@ public abstract class AbsSender {
             throw new TelegramApiException("Error at sendVideo", jsonObject.getString("description"));
         }
 
-        return new Message(jsonObject);
+        return new Message(jsonObject.getJSONObject(Constants.RESPONSEFIELDRESULT));
     }
 
     public Message sendSticker(SendSticker sendSticker) throws TelegramApiException {
@@ -628,7 +625,7 @@ public abstract class AbsSender {
             throw new TelegramApiException("Error at sendSticker", jsonObject.getString("description"));
         }
 
-        return new Message(jsonObject);
+        return new Message(jsonObject.getJSONObject(Constants.RESPONSEFIELDRESULT));
     }
 
     /**
@@ -778,7 +775,7 @@ public abstract class AbsSender {
             throw new TelegramApiException("Error at sendVoice", jsonObject.getString("description"));
         }
 
-        return new Message(jsonObject);
+        return new Message(jsonObject.getJSONObject(Constants.RESPONSEFIELDRESULT));
     }
 
     // Simplified methods
