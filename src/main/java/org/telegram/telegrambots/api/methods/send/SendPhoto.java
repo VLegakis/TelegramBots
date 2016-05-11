@@ -1,5 +1,6 @@
 package org.telegram.telegrambots.api.methods.send;
 
+import org.json.JSONObject;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
 
 /**
@@ -13,7 +14,7 @@ public class SendPhoto {
 
     public static final String CHATID_FIELD = "chat_id";
     public static final String PHOTO_FIELD = "photo";
-    public static final String CAPTION_FIELD = "photo";
+    public static final String CAPTION_FIELD = "caption";
     public static final String DISABLENOTIFICATION_FIELD = "disable_notification";
     public static final String REPLYTOMESSAGEID_FIELD = "reply_to_message_id";
     public static final String REPLYMARKUP_FIELD = "reply_markup";
@@ -114,13 +115,38 @@ public class SendPhoto {
     @Override
     public String toString() {
         return "SendPhoto{" +
-                "chatId='" + chatId + '\'' +
-                ", photo='" + photo + '\'' +
-                ", caption='" + caption + '\'' +
-                ", replayToMessageId=" + replayToMessageId +
-                ", replayMarkup=" + replayMarkup +
-                ", isNewPhoto=" + isNewPhoto +
-                ", photoName='" + photoName + '\'' +
+                "chatId='" + this.chatId + '\'' +
+                ", photo='" + this.photo + '\'' +
+                ", caption='" + this.caption + '\'' +
+                ", replayToMessageId=" + this.replayToMessageId +
+                ", replayMarkup=" + this.replayMarkup +
+                ", isNewPhoto=" + this.isNewPhoto +
+                ", photoName='" + this.photoName + '\'' +
                 '}';
     }
+    /*
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put(CHATID_FIELD, chatId);
+        jsonObject.put(PHOTO_FIELD, photo);
+        if (parseMode != null) {
+            jsonObject.put(PARSEMODE_FIELD, parseMode);
+        }
+        if (disableWebPagePreview != null) {
+            jsonObject.put(DISABLEWEBPAGEPREVIEW_FIELD, disableWebPagePreview);
+        }
+        if (disableNotification != null) {
+            jsonObject.put(DISABLENOTIFICATION_FIELD, disableNotification);
+        }
+        if (replayToMessageId != null) {
+            jsonObject.put(REPLYTOMESSAGEID_FIELD, replayToMessageId);
+        }
+        if (replayMarkup != null) {
+            jsonObject.put(REPLYMARKUP_FIELD, replayMarkup.toJson());
+        }
+
+        return jsonObject;
+    }
+     */
 }
